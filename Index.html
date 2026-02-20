@@ -139,3 +139,77 @@ Choose Image
 </div>
 </div>
 </section>
+  
+  <!-- SERVICES -->
+<section id="services" class="py-5 bg-light">
+<div class="container">
+<h2 class="text-center mb-5">Browse Services</h2>
+
+<div class="row text-center">
+
+<div class="col-md-3 mb-4">
+<div class="card shadow category-card p-4" onclick="selectService('Plumbing')">
+<h5>🔧 Plumbing</h5>
+</div>
+</div>
+
+<div class="col-md-3 mb-4">
+<div class="card shadow category-card p-4" onclick="selectService('Electrical')">
+<h5>⚡ Electrical</h5>
+</div>
+</div>
+
+<div class="col-md-3 mb-4">
+<div class="card shadow category-card p-4" onclick="selectService('Tutoring')">
+<h5>🎓 Tutoring</h5>
+</div>
+</div>
+
+<div class="col-md-3 mb-4">
+<div class="card shadow category-card p-4" onclick="selectService('Cleaning')">
+<h5>🧹 Cleaning</h5>
+</div>
+</div>
+
+</div>
+
+<div id="serviceResult" class="text-center mt-4"></div>
+</div>
+</section>
+
+  <!-- PROFILE SECTION -->
+<section class="container py-5 profile-box" id="profileSection">
+<h3 class="text-center">Your Profile</h3>
+
+<div class="text-center">
+<img id="profileImage" class="profile-img" src="">
+<p><strong>Name:</strong> <span id="profileName"></span></p>
+<p><strong>Email:</strong> <span id="profileEmail"></span></p>
+<p><strong>Phone:</strong> <span id="profilePhone"></span></p>
+</div>
+</section>
+
+  <footer class="bg-primary text-white text-center py-4">
+© 2026 TruVanta. All Rights Reserved.
+</footer>
+
+  <!-- SIGNUP MODAL -->
+
+<section class="container py-5 section-box" id="signinSection">
+<h3 class="text-center mb-4">Sign In</h3>
+
+<div class="col-md-4 mx-auto">
+<input type="email" id="signinEmail" class="form-control mb-2" placeholder="Gmail">
+<input type="password" id="signinPassword" class="form-control mb-3" placeholder="Password">
+
+<button class="btn btn-success w-100" onclick="loginUser()">Sign In</button>
+</div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+  
+  
+  

@@ -19,3 +19,123 @@ right:20px;
 z-index:999;
 border-radius:50px;
 }
+.card{border-radius:15px;}
+.navbar{box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+.profile-img{
+width:120px;
+height:120px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid #0d6efd;
+margin-bottom:15px;
+}
+.btn{border-radius:30px;}
+html{scroll-behavior:smooth;}
+body{background:linear-gradient(to bottom,#eaf4ff,#ffffff);padding-top:70px;}
+
+.hero{padding:100px 0;text-align:center;}
+
+.feature-card,.category-card{
+cursor:pointer;
+transition:0.3s;
+}
+.feature-card:hover,.category-card:hover{
+transform:translateY(-8px);
+}
+
+.logo-icon{
+font-size:40px;
+color:#0d6efd;
+}
+
+.trust-score{
+font-size:26px;
+font-weight:bold;
+color:green;
+}
+
+.profile-box{
+display:none;
+}
+
+footer{margin-top:80px;}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+<div class="container">
+<a class="navbar-brand fw-bold" href="#" onclick="goHome()">🤖 TruVanta</a>
+
+<div class="ms-auto">
+<button class="btn btn-light me-2" onclick="goHome()">Home</button>
+<button class="btn btn-success me-2" onclick="showSignup()">Sign Up</button>
+<button class="btn btn-info me-2" onclick="showSignin()">Sign In</button>
+<button class="btn btn-warning me-2" onclick="showProfile()">Profile</button>
+<button class="btn btn-dark" onclick="logout()">Exit</button>
+</div>
+</div>
+</nav>
+
+<!-- HOME SECTION -->
+<section class="hero" id="home">
+<h1 class="display-4 fw-bold text-primary">
+<span class="logo-icon">🛡</span> TruVanta
+</h1>
+<p class="lead">Secure • Verified • Smart Matching</p>
+<button class="btn btn-primary btn-lg mt-3" onclick="scrollToServices()">Explore Services</button>
+</section>
+<section class="container py-5 section-box" id="signupSection">
+<h3 class="text-center mb-4">Create Account</h3>
+
+<div class="col-md-4 mx-auto">
+<input type="text" id="signupName" class="form-control mb-2" placeholder="Full Name">
+<input type="email" id="signupEmail" class="form-control mb-2" placeholder="Gmail">
+<input type="password" id="signupPassword" class="form-control mb-2" placeholder="Password">
+<label class="form-label fw-bold">Upload a Picture</label>
+
+<input type="file" id="signupImage" hidden onchange="showFileName()">
+
+<button type="button" class="btn btn-outline-primary mb-2"
+onclick="document.getElementById('signupImage').click()">
+Choose Image
+</button>
+
+<span id="fileName" class="text-muted small"></span>
+
+<button class="btn btn-primary w-100" onclick="registerUser()">Sign Up</button>
+</div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="py-5">
+<div class="container">
+<div class="row text-center">
+
+<div class="col-md-4 mb-4">
+<div class="card shadow p-4 feature-card" onclick="generateTrustScore()">
+<h4>🛡 AI Trust Score</h4>
+<p>Click to calculate score</p>
+<div id="trustResult" class="trust-score"></div>
+</div>
+</div>
+
+<div class="col-md-4 mb-4">
+<div class="card shadow p-4 feature-card" onclick="verifySkill()">
+<h4>✅ Verified Skills</h4>
+<p>Provider verification system</p>
+<div id="verifyResult"></div>
+</div>
+</div>
+
+<div class="col-md-4 mb-4">
+<div class="card shadow p-4 feature-card" onclick="simulatePayment()">
+<h4>💳 Secure Payment</h4>
+<p>Simulated payment gateway</p>
+<div id="paymentResult"></div>
+</div>
+</div>
+</div>
+</div>
+</section>

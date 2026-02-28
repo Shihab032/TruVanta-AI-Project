@@ -288,6 +288,53 @@ alert("Invalid Email or Password");
 function emergencyHelp(){
 alert("Emergency Activated! Call 999");
 }
-  
-  
+
+function registerUser(){
+let name=document.getElementById("nameInput").value;
+let email=document.getElementById("emailInput").value;
+let phone=document.getElementById("phoneInput").value;
+let file=document.getElementById("imageInput").files[0];
+
+if(!name || !email || !phone){
+alert("Please fill all fields");
+return;
+}
+
+let reader=new FileReader();
+
+reader.onload=function(){
+let user={
+name:name,
+email:email,
+phone:phone,
+image:reader.result
+};
+
+localStorage.setItem("userData",JSON.stringify(user));
+alert("Registration Successful");
+bootstrap.Modal.getInstance(document.getElementById('authModal')).hide();
+};
+
+if(file){
+reader.readAsDataURL(file);
+}else{
+reader.onload();
+}
+}
+
+// Scroll
+function scrollToServices(){
+document.getElementById("services").scrollIntoView();
+}
+
+// Open Signup
+function openAuth(){
+new bootstrap.Modal(document.getElementById('authModal')).show();
+}
+
+// Register Gmail (No Duplicate Allowed)
+function registerEmail(){
+let email=document.getElementById("emailInput").value;
+
+   
   

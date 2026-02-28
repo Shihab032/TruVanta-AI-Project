@@ -38,4 +38,24 @@ body {
 ::-webkit-scrollbar-track { background: var(--surface); }
 ::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 3px; }
 
+/* ============ NAVBAR ============ */
+.navbar-custom {
+  background: rgba(10,15,30,0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,212,255,0.15);
+  padding: 14px 0;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+}
+  
+.navbar-brand-text {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
   

@@ -336,5 +336,80 @@ new bootstrap.Modal(document.getElementById('authModal')).show();
 function registerEmail(){
 let email=document.getElementById("emailInput").value;
 
-   
+if(!email.includes("@gmail.com")){
+alert("Please enter valid Gmail address");
+return;
+}
+
+let storedEmail=localStorage.getItem("registeredEmail");
+
+if(storedEmail===email){
+alert("This Gmail is already registered!");
+return;
+}
+
+localStorage.setItem("registeredEmail",email);
+alert("Registration Successful!");
+bootstrap.Modal.getInstance(document.getElementById('authModal')).hide();
+document.getElementById("emailInput").value="";
+}
+
+// Profile
+function showProfile(){
+let user=JSON.parse(localStorage.getItem("userData"));
+
+if(!user){
+alert("No user registered!");
+return;
+}
+
+document.getElementById("profileName").innerText=user.name;
+document.getElementById("profileEmail").innerText=user.email;
+document.getElementById("profilePhone").innerText=user.phone;
+document.getElementById("profileImage").src=user.image || "";
+
+document.getElementById("profileSection").style.display="block";
+document.getElementById("profileSection").scrollIntoView();
+}
+
+// Logout
+function logout(){
+if(confirm("Are you sure you want to exit?")){
+localStorage.clear();
+location.reload();
+}
+}
+
+// Trust Score
+function generateTrustScore(){
+let score=Math.floor(Math.random()*15)+85;
+document.getElementById("trustResult").innerText="Trust Score: "+score+"%";
+}
+
+// Verified Skill
+function verifySkill(){
+document.getElementById("verifyResult").innerHTML="<span class='text-success fw-bold'>Verified ✔</span>";
+}
+
+// Payment
+function simulatePayment(){
+document.getElementById("paymentResult").innerHTML="<span class='text-success fw-bold'>Payment Successful ✔</span>";
+}
+
+// Service
+function selectService(service){
+document.getElementById("serviceResult").innerHTML="<h4>You selected "+service+" Service ✔</h4>";
+}
+
+// Home
+function goHome(){
+window.scrollTo(0,0);
+}
+
+</script>
+<button id="emergencyBtn" class="btn btn-danger btn-lg" onclick="emergencyHelp()">
+🚨 Emergency
+</button>
+</body>
+</html>   
   

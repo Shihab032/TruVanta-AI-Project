@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TruVanta – AI-Driven Trust-Based Marketplace</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="frontend/css/styles.css">
+</head>
+<body>
+<!-- ====== NAVBAR ====== -->
+<nav class="navbar-custom">
+  <div class="container-fluid px-4">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+      <button class="nav-btn p-0" onclick="showPage('home')" title="Go Home">
+        <span class="navbar-brand-text">TruVanta</span>
+      </button>
+
+      <div class="d-flex align-items-center gap-2 flex-wrap">
+        <button class="nav-btn" onclick="showPage('home')"><i class="fas fa-home me-1"></i>Home</button>
+        <button class="emergency-btn-nav" id="navEmergencyBtn" style="display:none" onclick="showPage('emergency')"><i class="fas fa-exclamation-triangle me-1"></i>EMERGENCY</button>
+        <div id="navAuthBtns">
+          <button class="nav-btn" onclick="showPage('login')">Sign In</button>
+          <button class="btn-glow ms-1" onclick="showPage('register')">Sign Up</button>
+        </div>
+        <div id="navUserArea" style="display:none; align-items:center; gap:6px">
+          <div style="position:relative" id="navDashDropdownWrap">
+            <button class="nav-btn" onclick="toggleNavDropdown()" style="display:flex;align-items:center;gap:5px">
+              <i class="fas fa-th-large me-1"></i>Dashboard<i id="navChevron" class="fas fa-chevron-down ms-1" style="font-size:0.68rem;transition:transform 0.25s ease"></i>
+            </button>
+            <div id="navDropdownMenu" style="display:none;position:absolute;top:calc(100% + 10px);right:0;min-width:210px;background:rgba(10,15,30,0.97);border:1px solid rgba(0,212,255,0.18);border-radius:14px;padding:8px;z-index:99999;backdrop-filter:blur(20px);box-shadow:0 16px 48px rgba(0,0,0,0.55)">
+              <button onclick="showPage('features');closeNavDropdown()" class="nav-dropdown-item">
+                <span style="width:34px;height:34px;border-radius:9px;background:rgba(124,58,237,0.18);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0">⭐</span>
+                <span><strong style="display:block;font-size:0.9rem">Features</strong><span style="font-size:0.75rem;color:var(--muted)">AI Score · Verify · Geo · Chat</span></span>
+              </button>
+              <button onclick="showPage('services');closeNavDropdown()" class="nav-dropdown-item">
+                <span style="width:34px;height:34px;border-radius:9px;background:rgba(0,212,255,0.15);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0">🔧</span>
+                <span><strong style="display:block;font-size:0.9rem">Services</strong><span style="font-size:0.75rem;color:var(--muted)">Book verified professionals</span></span>
+              </button>
+              <button onclick="showPage('payment');closeNavDropdown()" class="nav-dropdown-item">
+                <span style="width:34px;height:34px;border-radius:9px;background:rgba(16,185,129,0.15);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0">💳</span>
+                <span><strong style="display:block;font-size:0.9rem">Payment</strong><span style="font-size:0.75rem;color:var(--muted)">Stripe escrow transactions</span></span>
+              </button>
+            </div>
+          </div>
+          <button class="nav-btn" onclick="showPage('profile')" id="navUserName"></button>
+          <button class="nav-btn text-danger" onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ====== HOME PAGE ====== -->
+<div id="page-home" class="page active" style="padding-top:0">
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="grid-overlay"></div>
+    <div class="hero-content container">
+      <div class="hero-badge"><i class="fas fa-shield-alt"></i> TruVanta</div>
+      <h1 class="hero-title">
+        Find Trusted Local<br><span class="title-gradient">Service Professionals</span>
+      </h1>
+      <p class="hero-subtitle">Your Trusted Source for Verified Service Providers.</p>
+      <div class="hero-actions">
+        <button class="btn-primary-custom" onclick="showPage('services')"><i class="fas fa-search me-2"></i>Find Services</button>
+        <button class="btn-outline-custom" onclick="showPage('register')"><i class="fas fa-briefcase me-2"></i>Become a Provider</button>
+      </div>
+      <div class="stats-bar">
+        <div class="stat-item">
+          <div class="stat-num">10K+</div>
+          <div class="stat-label">Verified Providers</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">98%</div>
+          <div class="stat-label">Trust Accuracy</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">50K+</div>
+          <div class="stat-label">Jobs Completed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">4.9<span style="font-size:1rem">★</span></div>
+          <div class="stat-label">Average Rating</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services highlight on home -->
+  <div class="section-block">
+    <div class="sec-divider"></div>
+    <h2 class="section-title">Our Services</h2>
+    <p class="section-sub">Click any service to get started immediately</p>
+    <div class="service-cards">
+      <div class="service-card" onclick="handleServiceCardClick('electrician')">
+        <div class="service-icon" style="background:rgba(245,158,11,0.15); color:var(--gold)">⚡</div>
+        <h5 style="font-family:'Syne',sans-serif; font-weight:700; margin-bottom:8px">Electrician</h5>
+        <p style="color:var(--muted); font-size:0.85rem">Wiring, repairs, installations & more</p>
+        <div class="mt-3"><span class="trust-badge"><i class="fas fa-check-circle"></i> AI Verified</span></div>
+      </div>
+      <div class="service-card" onclick="handleServiceCardClick('plumber')">
+        <div class="service-icon" style="background:rgba(0,212,255,0.15); color:var(--accent)">🔧</div>
+        <h5 style="font-family:'Syne',sans-serif; font-weight:700; margin-bottom:8px">Plumber</h5>
+        <p style="color:var(--muted); font-size:0.85rem">Pipes, leaks, drainage solutions</p>
+        <div class="mt-3"><span class="trust-badge"><i class="fas fa-check-circle"></i> AI Verified</span></div>
+      </div>
+      <div class="service-card" onclick="handleServiceCardClick('teacher')">
+        <div class="service-icon" style="background:rgba(124,58,237,0.15); color:var(--accent2)">📚</div>
+        <h5 style="font-family:'Syne',sans-serif; font-weight:700; margin-bottom:8px">Teacher</h5>
+        <p style="color:var(--muted); font-size:0.85rem">Tutoring, coaching & mentoring</p>
+        <div class="mt-3"><span class="trust-badge"><i class="fas fa-check-circle"></i> AI Verified</span></div>
+      </div>
+      <div class="service-card" onclick="handleServiceCardClick('cleaner')">
+        <div class="service-icon" style="background:rgba(16,185,129,0.15); color:var(--accent3)">🧹</div>
+        <h5 style="font-family:'Syne',sans-serif; font-weight:700; margin-bottom:8px">Cleaner</h5>
+        <p style="color:var(--muted); font-size:0.85rem">Home, office & deep cleaning</p>
+        <div class="mt-3"><span class="trust-badge"><i class="fas fa-check-circle"></i> AI Verified</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== FEATURES PAGE ====== -->
+<div id="page-features" class="page">
+  <div class="section-block" style="max-width:1000px">
+    <div class="sec-divider"></div>
+    <h2 class="section-title">Platform Features</h2>
+    <p class="section-sub">Explore our core capabilities powered by AI & modern tech</p>
+
+    <!-- Role notice for features page -->
+    <div id="featuresRoleNotice" class="access-notice" style="display:none"></div>
+
+    <div class="feature-tabs">
+      <button class="feature-tab active" onclick="showFeature('trust',event)">🤖 AI Trust Score</button>
+      <button class="feature-tab" onclick="showFeature('verify',event)">✅ Skill Verification</button>
+      <button class="feature-tab" onclick="showFeature('geo',event)">📍 Geo Matching</button>
+      <button class="feature-tab" onclick="showFeature('chat',event)">💬 Real-Time Chat</button>
+    </div>
+
+    <!-- AI Trust Score Panel -->
+    <div id="panel-trust" class="feature-panel active">
+      <div class="feature-content">
+        <div>
+          <div class="trust-badge mb-3"><i class="fas fa-brain"></i> Machine Learning Powered</div>
+          <h3 style="font-family:'Syne',sans-serif; font-weight:800; font-size:1.6rem; margin-bottom:12px">AI-Based Trust Scoring</h3>
+          <p style="color:var(--muted); font-size:0.95rem; line-height:1.7; margin-bottom:20px">Our ML model evaluates providers using real behavioral data — job completion, punctuality, dispute history, feedback & verification status. Upload your documents below for instant scoring.</p>
+
+          <!-- Provider-only form section -->
+          <div id="trustFormSection">
+            <div class="form-group">
+              <label class="custom-label">Upload Resume / Portfolio</label>
+              <div class="upload-area" onclick="triggerUpload('trustResume')">
+                <input type="file" id="trustResume" style="display:none" accept=".pdf,.doc,.docx" onchange="handleTrustFile(this)">
+                <i class="fas fa-cloud-upload-alt fa-2x mb-2" style="color:var(--accent)"></i>
+                <div id="trustUploadLabel" style="color:var(--muted); font-size:0.9rem">Drop PDF/DOC or click to browse</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="custom-label">Upload Skill Certificate</label>
+              <div class="upload-area" onclick="triggerUpload('trustCert')">
+                <input type="file" id="trustCert" style="display:none" accept=".pdf,.jpg,.png" onchange="handleTrustCert(this)">
+                <i class="fas fa-certificate fa-2x mb-2" style="color:var(--accent2)"></i>
+                <div id="trustCertLabel" style="color:var(--muted); font-size:0.9rem">Drop certificate or click to browse</div>
+              </div>
+            </div>
+            <button class="btn-submit" style="background:linear-gradient(135deg,var(--accent3),#059669)" onclick="computeTrustScore(event)">
+              <i class="fas fa-magic me-2"></i>Compute AI Trust Score
+            </button>
+          </div>
+
+          <div id="trustScoreResult" class="score-result-card mt-4">
+            <div class="big-score" id="bigScoreNum">82</div>
+            <div style="font-size:1.1rem; font-weight:600; margin:8px 0">Trust Score</div>
+            <div class="trust-badge mx-auto"><i class="fas fa-shield-check"></i> Highly Trusted</div>
+            <div class="row g-2 mt-3">
+              <div class="col-6"><div style="background:rgba(255,255,255,0.04); border-radius:8px; padding:10px; font-size:0.82rem"><div style="color:var(--muted)">Completion Rate</div><div style="font-weight:700; color:var(--accent3)" id="sr-completion">94%</div></div></div>
+              <div class="col-6"><div style="background:rgba(255,255,255,0.04); border-radius:8px; padding:10px; font-size:0.82rem"><div style="color:var(--muted)">Punctuality</div><div style="font-weight:700; color:var(--accent)" id="sr-punct">88%</div></div></div>
+              <div class="col-6"><div style="background:rgba(255,255,255,0.04); border-radius:8px; padding:10px; font-size:0.82rem"><div style="color:var(--muted)">Skill Match</div><div style="font-weight:700; color:var(--accent2)" id="sr-skill">79%</div></div></div>
+              <div class="col-6"><div style="background:rgba(255,255,255,0.04); border-radius:8px; padding:10px; font-size:0.82rem"><div style="color:var(--muted)">Feedback Score</div><div style="font-weight:700; color:var(--gold)" id="sr-feedback">4.7★</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="trust-demo">
+            <div style="text-align:center; margin-bottom:20px">
+              <div style="font-size:0.8rem; color:var(--muted); margin-bottom:12px; text-transform:uppercase; letter-spacing:1px">Sample Provider Score</div>
+              <div class="score-ring">
+                <span class="score-num">82</span>
+              </div>
+              <div class="trust-badge mt-2 mx-auto d-inline-flex"><i class="fas fa-check-circle"></i> Highly Trusted</div>
+            </div>
+            <div>
+              <div class="score-bar-item"><span style="width:100px; font-size:0.82rem; color:var(--muted)">Job Completion</span><div class="score-bar-bg"><div class="score-bar-fill" style="width:94%"></div></div><span style="font-size:0.82rem; color:var(--accent3)">94%</span></div>
+              <div class="score-bar-item"><span style="width:100px; font-size:0.82rem; color:var(--muted)">Punctuality</span><div class="score-bar-bg"><div class="score-bar-fill" style="width:88%"></div></div><span style="font-size:0.82rem; color:var(--accent3)">88%</span></div>
+              <div class="score-bar-item"><span style="width:100px; font-size:0.82rem; color:var(--muted)">Verification</span><div class="score-bar-bg"><div class="score-bar-fill" style="width:100%"></div></div><span style="font-size:0.82rem; color:var(--accent3)">100%</span></div>
+              <div class="score-bar-item"><span style="width:100px; font-size:0.82rem; color:var(--muted)">Low Disputes</span><div class="score-bar-bg"><div class="score-bar-fill" style="width:76%"></div></div><span style="font-size:0.82rem; color:var(--accent3)">76%</span></div>
+              <div class="score-bar-item"><span style="width:100px; font-size:0.82rem; color:var(--muted)">Customer Vote</span><div class="score-bar-bg"><div class="score-bar-fill" style="width:91%"></div></div><span style="font-size:0.82rem; color:var(--accent3)">91%</span></div>
+            </div>
+          </div>
+          <div style="background:rgba(0,212,255,0.05); border:1px solid rgba(0,212,255,0.2); border-radius:12px; padding:16px; margin-top:16px; font-size:0.85rem; color:var(--muted)">
+            <i class="fas fa-info-circle me-2" style="color:var(--accent)"></i>
+            Scores update dynamically after each completed job using Python Scikit-learn machine learning models.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skill Verification Panel -->
+    <div id="panel-verify" class="feature-panel">
+      <div class="feature-content">
+        <div>
+          <div class="trust-badge mb-3" style="border-color:var(--accent2); color:var(--accent2)"><i class="fas fa-user-shield"></i> Identity + Skills</div>
+          <h3 style="font-family:'Syne',sans-serif; font-weight:800; font-size:1.6rem; margin-bottom:12px">Skill Verification System</h3>
+          <p style="color:var(--muted); font-size:0.95rem; line-height:1.7; margin-bottom:24px">Providers submit ID documents and complete a skill assessment. Verified providers receive a digital trust badge visible to all customers.</p>
+          <div class="verification-steps">
+            <div class="v-step"><div class="v-step-num">1</div><div><div style="font-weight:600; margin-bottom:2px">Submit Government ID</div><div style="color:var(--muted); font-size:0.85rem">NID, Passport or Driver's License for identity verification</div></div></div>
+            <div class="v-step"><div class="v-step-num">2</div><div><div style="font-weight:600; margin-bottom:2px">Upload Skill Certificates</div><div style="color:var(--muted); font-size:0.85rem">Trade certificates, degrees or professional licenses</div></div></div>
+            <div class="v-step"><div class="v-step-num">3</div><div><div style="font-weight:600; margin-bottom:2px">Complete Competency Test</div><div style="color:var(--muted); font-size:0.85rem">Short online assessment for your service category</div></div></div>
+            <div class="v-step"><div class="v-step-num" style="background:linear-gradient(135deg,var(--accent3),#059669)">✓</div><div><div style="font-weight:600; margin-bottom:2px">Receive Trust Badge</div><div style="color:var(--muted); font-size:0.85rem">Digital verified badge shown on your public profile</div></div></div>
+          </div>
+          <div id="verifyBtnSection">
+            <button class="btn-submit mt-4" style="background:linear-gradient(135deg,var(--accent2),#4f46e5)" onclick="showModal('verifyModal')"><i class="fas fa-upload me-2"></i>Start Verification</button>
+          </div>
+        </div>
+        <div>
+          <div class="trust-demo">
+            <div style="text-align:center; margin-bottom:20px">
+              <div style="font-size:3rem; margin-bottom:12px">🏅</div>
+              <div class="trust-badge mx-auto mb-2"><i class="fas fa-check-double"></i> Fully Verified Provider</div>
+              <div style="font-family:'Syne',sans-serif; font-weight:700; margin-top:12px">Ahmad Rizwan</div>
+              <div style="color:var(--muted); font-size:0.85rem">Master Electrician · 8 yrs exp</div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px">
+              <div style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.2); border-radius:10px; padding:12px; text-align:center; font-size:0.82rem"><i class="fas fa-id-card" style="color:var(--accent3); margin-bottom:4px; display:block"></i><div style="color:var(--muted)">ID Verified</div><div style="font-weight:700; color:var(--accent3)">✓ Approved</div></div>
+              <div style="background:rgba(0,212,255,0.1); border:1px solid rgba(0,212,255,0.2); border-radius:10px; padding:12px; text-align:center; font-size:0.82rem"><i class="fas fa-certificate" style="color:var(--accent); margin-bottom:4px; display:block"></i><div style="color:var(--muted)">Certificate</div><div style="font-weight:700; color:var(--accent)">✓ Valid</div></div>
+              <div style="background:rgba(124,58,237,0.1); border:1px solid rgba(124,58,237,0.2); border-radius:10px; padding:12px; text-align:center; font-size:0.82rem"><i class="fas fa-tasks" style="color:var(--accent2); margin-bottom:4px; display:block"></i><div style="color:var(--muted)">Skill Test</div><div style="font-weight:700; color:var(--accent2)">96/100</div></div>
+              <div style="background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.2); border-radius:10px; padding:12px; text-align:center; font-size:0.82rem"><i class="fas fa-star" style="color:var(--gold); margin-bottom:4px; display:block"></i><div style="color:var(--muted)">Trust Score</div><div style="font-weight:700; color:var(--gold)">89/100</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Geo Panel -->
+    <div id="panel-geo" class="feature-panel">
+      <div class="feature-content">
+        <div>
+          <div class="trust-badge mb-3" style="border-color:var(--accent); color:var(--accent)"><i class="fas fa-map-marker-alt"></i> Haversine Formula</div>
+          <h3 style="font-family:'Syne',sans-serif; font-weight:800; font-size:1.6rem; margin-bottom:12px">Geo-Based Service Matching</h3>
+          <p style="color:var(--muted); font-size:0.95rem; line-height:1.7; margin-bottom:20px">Our Python-based geolocation engine uses the Haversine formula to calculate distances and rank nearby providers by trust score + availability.</p>
+          <div class="map-container mb-3">
+            <div class="map-grid"></div>
+            <div class="map-dot" style="top:40%;left:48%"></div>
+            <div class="map-dot green" style="top:25%;left:60%;background:var(--accent3)"></div>
+            <div class="map-dot green" style="top:60%;left:35%;background:var(--accent3)"></div>
+            <div class="map-dot green" style="top:35%;left:25%;background:var(--accent3)"></div>
+            <div style="position:relative;z-index:1; text-align:center; color:var(--muted); font-size:0.85rem"><i class="fas fa-map-marker-alt me-2" style="color:var(--danger)"></i>You · <i class="fas fa-circle me-1" style="color:var(--accent3); font-size:0.6rem"></i>Nearby providers</div>
+          </div>
+          <div id="geoBtnSection">
+            <button class="btn-submit" style="background:linear-gradient(135deg,var(--accent),#0090b8); color:#0a0f1e" onclick="geoScrollToForm()"><i class="fas fa-location-arrow me-2"></i>Register My Location</button>
+          </div>
+        </div>
+        <div>
+          <div class="trust-demo">
+            <div style="font-size:0.8rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:16px">Nearby Providers</div>
+            <div id="geoNearbyList"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Provider Geo Registration Form (scrolled into view) -->
+      <div id="geoFormSection" style="display:none; margin-top:32px; animation:fadeIn 0.4s ease">
+        <div class="form-page-inner" style="max-width:560px">
+          <h5 style="font-family:'Syne',sans-serif; font-weight:700; margin-bottom:6px">📍 Register Your Location</h5>
+          <p style="color:var(--muted); font-size:0.88rem; margin-bottom:20px">Help customers find you in emergency & normal bookings</p>
+          <div class="row g-3">
+            <div class="col-md-6 form-group">
+              <label class="custom-label">Your Name</label>
+              <input type="text" id="geo-name" class="custom-input" placeholder="Full name">
+            </div>
+            <div class="col-md-6 form-group">
+              <label class="custom-label">Service Type</label>
+              <select id="geo-service" class="custom-input">
+                <option value="">Select...</option>
+                <option>Electrician</option>
+                <option>Plumber</option>
+                <option>Teacher</option>
+                <option>Cleaner</option>
+              </select>
+            </div>
+            <div class="col-md-6 form-group">
+              <label class="custom-label">Area / Zone</label>
+              <select id="geo-area" class="custom-input">
+                <option value="">Select your area...</option>
+                <option>Arlington, USA</option>
+                <option>Aurora, UK</option>
+                <option>Austin, USA</option>
+                <option>Australia</option>
+                <option>Boston, USA</option>
+                <option>Canada</option>
+                <option>Chandler, Australia</option>
+                <option>Colorado Springs, USA</option>
+                <option>Colorado, USA</option>
+                <option>Fort Lauderdale, USA</option>
+                <option>Jackson, USA</option>
+                <option>Kansas City, USA</option>
+                <option>Knoxville, USA</option>
+                <option>Lincoln, USA</option>
+                <option>Long Island, USA</option>
+                <option>Madison, UK</option>
+                <option>Nashville, UK</option>
+                <option>Nashville, USA</option>
+                <option>Orlando, USA</option>
+                <option>Philadelphia, USA</option>
+                <option>Phoenix, Canada</option>
+                <option>Reno, USA</option>
+                <option>Richmond, Canada</option>
+                <option>San Antonio, USA</option>
+                <option>Scottsdale, USA</option>
+                <option>Tulsa, USA</option>
+                <option>UK</option>
+                <option>USA</option>
+                <option>Vancouver, Canada</option>
+                <option>Winston Salem, USA</option>
+              </select>
+            </div>
+            <div class="col-md-6 form-group">
+              <label class="custom-label">Availability</label>
+              <select id="geo-avail" class="custom-input">
+                <option>Available Now</option>
+                <option>Available Today</option>
+                <option>Busy — Call First</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-submit mt-2" style="background:linear-gradient(135deg,var(--accent),#0090b8); color:#0a0f1e" onclick="submitGeoForm()"><i class="fas fa-map-pin me-2"></i>Save My Location</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Panel -->
+    <div id="panel-chat" class="feature-panel">
+      <div class="feature-content">
+        <div>
+          <div class="trust-badge mb-3" style="border-color:var(--accent3); color:var(--accent3)"><i class="fas fa-comments"></i> Django Channels</div>
+          <h3 style="font-family:'Syne',sans-serif; font-weight:800; font-size:1.6rem; margin-bottom:12px">Real-Time Communication</h3>
+          <p style="color:var(--muted); font-size:0.95rem; line-height:1.7; margin-bottom:24px">Powered by Django Channels WebSockets, customers and providers chat live — coordinating details, sharing updates and confirming job completion in real time.</p>
+          <div style="background:rgba(16,185,129,0.05); border:1px solid rgba(16,185,129,0.2); border-radius:12px; padding:20px">
+            <div style="font-size:0.85rem; font-weight:600; margin-bottom:16px; color:var(--muted)">LIVE FEATURES</div>
+            <div class="d-flex align-items-center gap-3 mb-3"><div style="width:36px;height:36px;border-radius:50%;background:rgba(16,185,129,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem">⚡</div><div><div style="font-size:0.9rem;font-weight:600">Instant Messaging</div><div style="font-size:0.82rem;color:var(--muted)">Zero-delay WebSocket connection</div></div></div>
+            <div class="d-flex align-items-center gap-3 mb-3"><div style="width:36px;height:36px;border-radius:50%;background:rgba(0,212,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem">📷</div><div><div style="font-size:0.9rem;font-weight:600">Media Sharing</div><div style="font-size:0.82rem;color:var(--muted)">Photos of work, receipts & documents</div></div></div>
+            <div class="d-flex align-items-center gap-3"><div style="width:36px;height:36px;border-radius:50%;background:rgba(124,58,237,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem">✅</div><div><div style="font-size:0.9rem;font-weight:600">Job Confirmation</div><div style="font-size:0.82rem;color:var(--muted)">Completion confirmation triggers payment release</div></div></div>
+          </div>
+        </div>
+        <div>
+          <div style="background:var(--surface2); border-radius:16px; padding:20px; max-width:340px; margin:0 auto">
+            <div style="display:flex; align-items:center; gap:12px; padding-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.06); margin-bottom:14px">
+              <div style="width:40px;height:40px;border-radius:50%;background:rgba(245,158,11,0.2);display:flex;align-items:center;justify-content:center">⚡</div>
+              <div><div style="font-weight:600;font-size:0.9rem">Karim — Electrician</div><div style="font-size:0.78rem;color:var(--accent3)"><span class="online-dot"></span>Online Now</div></div>
+            </div>
+            <div>
+              <div style="background:rgba(255,255,255,0.05); border-radius:12px 12px 12px 2px; padding:10px 14px; font-size:0.85rem; margin-bottom:10px; max-width:80%">Hi! I can come for the wiring fix at 3pm today. ✓✓</div>
+              <div style="background:linear-gradient(135deg,rgba(124,58,237,0.4),rgba(79,70,229,0.3)); border-radius:12px 12px 2px 12px; padding:10px 14px; font-size:0.85rem; margin-bottom:10px; max-width:80%; margin-left:auto; text-align:right">Perfect! 3pm works. The issue is in the main panel.</div>
+              <div style="background:rgba(255,255,255,0.05); border-radius:12px 12px 12px 2px; padding:10px 14px; font-size:0.85rem; margin-bottom:10px; max-width:80%">Understood! Payment is secured in escrow. 💰</div>
+            </div>
+            <div style="display:flex; gap:8px; margin-top:14px">
+              <input type="text" class="custom-input" placeholder="Type message..." style="padding:8px 12px; font-size:0.85rem">
+              <button onclick="showToast('Message sent!','success')" style="background:var(--accent2);border:none;color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer; transition:all 0.2s" onmouseover="this.style.background='#4f46e5'" onmouseout="this.style.background='var(--accent2)'"><i class="fas fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ====== SERVICES PAGE ====== -->
+<div id="page-services" class="page">
+  <div class="section-block">
+    <div class="sec-divider"></div>
+    <h2 class="section-title">Available Services</h2>
+    <p class="section-sub" id="servicesSubtitle">Select a service to book a verified professional</p>
+
+    <!-- Role access notice for services -->
+    <div id="servicesRoleNotice" class="access-notice" style="display:none"></div>
+
+    <div class="service-cards mb-5" id="serviceCardsGrid">
+      <div class="service-card" onclick="handleServiceCardClick('electrician')">
+        <div class="service-icon" style="background:rgba(245,158,11,0.15); color:var(--gold)">⚡</div>
+        <h5 style="font-family:'Syne',sans-serif; font-weight:700; margin-bottom:8px">Electrician</h5>
+        <p style="color:var(--muted); font-size:0.85rem">Wiring, installation, repairs</p>
+        <div class="mt-3 d-flex justify-content-between align-items-center">
+          <span class="trust-badge"><i class="fas fa-check-circle"></i> AI Verified</span>
+          <small style="color:var(--muted)" id="countElectrician">Loading...</small>
+        </div>
+      </div>
+      <div class="service-card" onclick="handleServiceCardClick('plumber')">
+        <div class="service-icon" style="background:rgba(0,212,255,0.15); color:var(--accent)">🔧</div>
+        <h5 style="font-family:'Syne',sans-serif; font-weight:700; margin-bottom:8px">Plumber</h5>
+        <p style="color:var(--muted); font-size:0.85rem">Pipe repairs, drainage, leaks</p>
+        <div class="mt-3 d-flex justify-content-between align-items-center">
+          <span class="trust-badge"><i class="fas fa-check-circle"></i> AI Verified</span>
+          <small style="color:var(--muted)" id="countPlumber">Loading...</small>
+        </div>
+      </div>
+      <div class="service-card" onclick="handleServiceCardClick('teacher')">
+        <div class="service-icon" style="background:rgba(124,58,237,0.15); color:var(--accent2)">📚</div>
+        <h5 style="font-family:'Syne',sans-serif; font-weight:700; margin-bottom:8px">Teacher</h5>
+        <p style="color:var(--muted); font-size:0.85rem">Tutor, coach, academic help</p>
+        <div class="mt-3 d-flex justify-content-between align-items-center">
+          <span class="trust-badge"><i class="fas fa-check-circle"></i> AI Verified</span>
+          <small style="color:var(--muted)" id="countTeacher">Loading...</small>
+        </div>
+      </div>
+      <div class="service-card" onclick="handleServiceCardClick('cleaner')">
+        <div class="service-icon" style="background:rgba(16,185,129,0.15); color:var(--accent3)">🧹</div>
+        <h5 style="font-family:'Syne',sans-serif; font-weight:700; margin-bottom:8px">Cleaner</h5>
+        <p style="color:var(--muted); font-size:0.85rem">Deep cleaning, office, home</p>
+        <div class="mt-3 d-flex justify-content-between align-items-center">
+          <span class="trust-badge"><i class="fas fa-check-circle"></i> AI Verified</span>
+          <small style="color:var(--muted)" id="countCleaner">Loading...</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Customer booking form (inline, same page, scrolled to on click) -->
+    <div id="serviceFormContainer" style="display:none; animation:fadeIn 0.4s ease">
+      <div class="form-page-inner" style="max-width:700px" id="serviceFormAnchor">
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <div id="serviceFormIcon" style="width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem"></div>
+          <div>
+            <div class="form-title" id="serviceFormTitle">Book Electrician</div>
+            <div class="form-subtitle mb-0" id="serviceFormSub">Fill your details to book this service</div>
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-md-6 form-group">
+            <label class="custom-label">Full Name *</label>
+            <input type="text" id="sf-name" class="custom-input" placeholder="Your full name">
+          </div>
+          <div class="col-md-6 form-group">
+            <label class="custom-label">Email Address *</label>
+            <input type="email" id="sf-email" class="custom-input" placeholder="you@example.com">
+          </div>
+          <div class="col-md-6 form-group">
+            <label class="custom-label">Phone Number *</label>
+            <input type="tel" id="sf-phone" class="custom-input" placeholder="+880 1700 000000">
+          </div>
+          <div class="col-md-6 form-group">
+            <label class="custom-label">Service Date</label>
+            <input type="date" id="sf-date" class="custom-input">
+          </div>
+          <div class="col-12 form-group">
+            <label class="custom-label">Upload Document (ID/Certificate) *</label>
+            <div class="upload-area" onclick="triggerUpload('sfDocument')">
+              <input type="file" id="sfDocument" style="display:none" onchange="handleSfDoc(this)">
+              <i class="fas fa-paperclip fa-2x mb-2" style="color:var(--accent2)"></i>
+              <div id="sfDocLabel" style="color:var(--muted); font-size:0.9rem">Upload ID / Certificate</div>
+            </div>
+          </div>
+          <div class="col-12 form-group">
+            <label class="custom-label">Service Description</label>
+            <textarea id="sf-desc" class="custom-input" rows="3" placeholder="Describe your issue or requirements..."></textarea>
+          </div>
+        </div>
+        <div class="d-flex gap-3 mt-3">
+          <button class="btn-submit" style="flex:1" onclick="submitServiceForm()"><i class="fas fa-check-circle me-2"></i>Confirm Booking</button>
+          <button class="btn-outline-custom" style="padding:14px 20px; font-size:0.9rem" onclick="cancelServiceForm()">Cancel</button>
+        </div>
+        <div class="text-center mt-3">
+          <button id="nearbyToggleBtn" style="display:none; background:linear-gradient(135deg,rgba(0,212,255,0.12),rgba(124,58,237,0.1)); border:1px solid rgba(0,212,255,0.25); color:var(--accent); padding:11px 24px; border-radius:50px; cursor:pointer; font-size:0.88rem; font-weight:600; font-family:'DM Sans',sans-serif; align-items:center; gap:8px; transition:all 0.25s" onmouseover="this.style.background='linear-gradient(135deg,rgba(0,212,255,0.2),rgba(124,58,237,0.15))'" onmouseout="this.style.background='linear-gradient(135deg,rgba(0,212,255,0.12),rgba(124,58,237,0.1))'" onclick="toggleNearbySection()">
+            <i class="fas fa-map-marker-alt me-2"></i>View Nearby Available Providers
+          </button>
+        </div>
+      </div>
+      <!-- No DB table shown here — data saved silently to database.json -->
+    </div>
+
+    <!-- ====== PROVIDER SEARCH RESULTS (from Excel DB) ====== -->
+    <div id="providerResultsSection" style="display:none; animation:fadeIn 0.4s ease; margin-top:32px">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:12px">
+        <div>
+          <h4 style="font-family:'Syne',sans-serif; font-weight:800; margin-bottom:4px" id="providerResultsTitle">Available Electricians</h4>
+          <div style="color:var(--muted); font-size:0.88rem" id="providerResultsCount"></div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+          <select id="providerFilterArea" class="custom-input" style="padding:8px 14px; width:auto; font-size:0.85rem" onchange="renderProviders()">
+            <option value="">All Areas</option>
+            <option>Arlington, USA</option>
+            <option>Aurora, UK</option>
+            <option>Austin, USA</option>
+            <option>Australia</option>
+            <option>Boston, USA</option>
+            <option>Canada</option>
+            <option>Chandler, Australia</option>
+            <option>Colorado Springs, USA</option>
+            <option>Colorado, USA</option>
+            <option>Fort Lauderdale, USA</option>
+            <option>Jackson, USA</option>
+            <option>Kansas City, USA</option>
+            <option>Knoxville, USA</option>
+            <option>Lincoln, USA</option>
+            <option>Long Island, USA</option>
+            <option>Madison, UK</option>
+            <option>Nashville, UK</option>
+            <option>Nashville, USA</option>
+            <option>Orlando, USA</option>
+            <option>Philadelphia, USA</option>
+            <option>Phoenix, Canada</option>
+            <option>Reno, USA</option>
+            <option>Richmond, Canada</option>
+            <option>San Antonio, USA</option>
+            <option>Scottsdale, USA</option>
+            <option>Tulsa, USA</option>
+            <option>UK</option>
+            <option>USA</option>
+            <option>Vancouver, Canada</option>
+            <option>Winston Salem, USA</option>
+          </select>
+          <select id="providerFilterSort" class="custom-input" style="padding:8px 14px; width:auto; font-size:0.85rem" onchange="renderProviders()">
+            <option value="trust">Sort: Trust Score</option>
+            <option value="distance">Sort: Distance</option>
+            <option value="rating">Sort: Rating</option>
+            <option value="jobs">Sort: Jobs Done</option>
+          </select>
+          <input type="text" id="providerSearch" class="custom-input" placeholder="Search provider..." style="padding:8px 14px; width:180px; font-size:0.85rem" oninput="renderProviders()">
+        </div>
+      </div>
+      <div id="providerResultsGrid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px"></div>
+      <div style="text-align:center; margin-top:24px">
+        <button id="providerLoadMore" class="btn-outline-custom" style="padding:10px 28px; font-size:0.9rem" onclick="loadMoreProviders()">
+          <i class="fas fa-plus me-2"></i>Load More
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== PAYMENT PAGE ====== -->
+<div id="page-payment" class="page">
+  <div class="section-block" style="max-width:900px">
+    <div class="sec-divider"></div>
+    <h2 class="section-title">Secure Payment</h2>
+    <p class="section-sub">Powered by Stripe — Escrow-based transaction system</p>
+
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="form-page-inner h-100">
+          <h5 style="font-family:'Syne',sans-serif; font-weight:700; margin-bottom:6px">Payment Details</h5>
+          <div style="color:var(--muted); font-size:0.85rem; margin-bottom:24px">Funds held in escrow until job completion</div>
+
+          <div class="form-group">
+            <label class="custom-label">Service</label>
+            <select class="custom-input" id="pay-service">
+              <option value="">Select service...</option>
+              <option>Electrician — Wiring Fix</option>
+              <option>Plumber — Pipe Repair</option>
+              <option>Teacher — Tutoring</option>
+              <option>Cleaner — Deep Clean</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="custom-label">Amount (USD $)</label>
+            <input type="number" id="pay-amount" class="custom-input" placeholder="20" value="50" oninput="updateFeeBreakdown()">
+          </div>
+          <!-- Live fee breakdown — auto updates as user types -->
+          <div id="feeBreakdown" style="background:rgba(0,212,255,0.05); border:1px solid rgba(0,212,255,0.15); border-radius:12px; padding:14px 16px; margin-bottom:16px; font-size:0.85rem">
+            <div style="font-family:'Syne',sans-serif; font-weight:700; font-size:0.82rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:10px">Payment Breakdown</div>
+            <div class="d-flex justify-content-between mb-2">
+              <span style="color:var(--muted)">Service Amount</span>
+              <span id="breakdownBase" style="font-weight:600">$ 50.00</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span style="color:var(--muted)">Platform Fee <span style="background:rgba(245,158,11,0.15); color:var(--gold); font-size:0.72rem; padding:1px 7px; border-radius:50px; font-weight:700">2%</span></span>
+              <span id="breakdownFee" style="color:var(--gold); font-weight:600">− $ 1.00</span>
+            </div>
+            <div style="border-top:1px solid rgba(255,255,255,0.07); margin:10px 0"></div>
+            <div class="d-flex justify-content-between">
+              <span style="font-weight:700">Provider Receives</span>
+              <span id="breakdownProvider" style="color:var(--accent3); font-weight:700">$ 49.00</span>
+            </div>
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-weight:700">Total Charged to You</span>
+              <span id="breakdownTotal" style="color:var(--accent); font-weight:700">$ 50.00</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="custom-label">Card Number</label>
+            <input type="text" id="pay-card" class="custom-input" placeholder="4242 4242 4242 4242" maxlength="19" oninput="formatCardNumber(this)">
+          </div>
+          <div class="row g-3">
+            <div class="col-6 form-group">
+              <label class="custom-label">Expiry</label>
+              <input type="text" class="custom-input" placeholder="MM/YY" maxlength="5">
+            </div>
+            <div class="col-6 form-group">
+              <label class="custom-label">CVC</label>
+              <input type="text" class="custom-input" placeholder="123" maxlength="3">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="custom-label">Cardholder Name</label>
+            <input type="text" class="custom-input" placeholder="Name on card">
+          </div>
+
+          <button class="btn-submit" onclick="processPayment()"><i class="fab fa-stripe me-2"></i>Pay with Stripe — Escrow</button>
+
+          <!-- payment success state -->
+          <div class="payment-success" id="paymentSuccess">
+            <div class="checkmark-circle">✓</div>
+            <h5 style="font-family:'Syne',sans-serif; font-weight:700">Payment Secured!</h5>
+            <p style="color:var(--muted); font-size:0.9rem; margin-top:8px">Funds held in escrow. Released to provider after service confirmation.</p>
+            <div style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); border-radius:12px; padding:16px; margin-top:16px; font-size:0.85rem">
+              <div class="d-flex justify-content-between mb-2"><span style="color:var(--muted)">Transaction ID</span><span style="color:var(--accent3); font-weight:700" id="txnId">#TV-28473</span></div>
+              <div class="d-flex justify-content-between mb-2"><span style="color:var(--muted)">Service Amount</span><span style="font-weight:700" id="txnAmount">$ 50.00</span></div>
+              <div class="d-flex justify-content-between mb-2"><span style="color:var(--muted)">Platform Fee (2%)</span><span style="color:var(--gold); font-weight:700" id="txnFee">− $ 1.00</span></div>
+              <div class="d-flex justify-content-between mb-2"><span style="color:var(--muted)">Provider Receives</span><span style="color:var(--accent3); font-weight:700" id="txnProvider">$ 49.00</span></div>
+              <div style="border-top:1px solid rgba(255,255,255,0.1); margin:10px 0"></div>
+              <div class="d-flex justify-content-between mb-2"><span style="font-weight:700">Total Charged</span><span style="color:var(--accent); font-weight:700" id="txnTotal">$ 50.00</span></div>
+              <div class="d-flex justify-content-between"><span style="color:var(--muted)">Status</span><span style="color:var(--accent3); font-weight:700">🔒 In Escrow</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="stripe-card mb-3">
+          <div class="card-brand">
+            <span class="visa-logo">VISA</span>
+            <div style="width:36px;height:22px;background:linear-gradient(135deg,#f59e0b,#d97706);border-radius:4px;display:inline-block"></div>
+          </div>
+          <div class="card-number-display">•••• •••• •••• <span id="cardLast4">4242</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:var(--muted)">
+            <div>CARDHOLDER<br><span style="color:var(--text); font-weight:600">Your Name</span></div>
+            <div style="text-align:right">EXPIRES<br><span style="color:var(--text); font-weight:600">MM/YY</span></div>
+          </div>
+          <div class="stripe-badge mt-3"><i class="fas fa-lock me-1"></i>Stripe Secured · 256-bit SSL · PCI DSS</div>
+        </div>
+
+        <!-- Escrow explanation -->
+        <div style="background:var(--surface); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:24px">
+          <h6 style="font-family:'Syne',sans-serif; font-weight:700; margin-bottom:16px">How Escrow Works</h6>
+          <div class="d-flex align-items-start gap-12 mb-3" style="gap:12px">
+            <div style="width:32px;height:32px;min-width:32px;border-radius:50%;background:rgba(0,212,255,0.2);display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;color:var(--accent)">1</div>
+            <div style="font-size:0.88rem"><span style="font-weight:600">Customer pays</span> — <span style="color:var(--muted)">funds held by TruVanta</span></div>
+          </div>
+          <div class="d-flex align-items-start gap-12 mb-3" style="gap:12px">
+            <div style="width:32px;height:32px;min-width:32px;border-radius:50%;background:rgba(124,58,237,0.2);display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;color:var(--accent2)">2</div>
+            <div style="font-size:0.88rem"><span style="font-weight:600">Service completed</span> — <span style="color:var(--muted)">customer confirms</span></div>
+          </div>
+          <div class="d-flex align-items-start gap-12" style="gap:12px">
+            <div style="width:32px;height:32px;min-width:32px;border-radius:50%;background:rgba(16,185,129,0.2);display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;color:var(--accent3)">3</div>
+            <div style="font-size:0.88rem"><span style="font-weight:600">Payment released</span> — <span style="color:var(--muted)">minus 10% platform fee</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== EMERGENCY PAGE ====== -->
+<div id="page-emergency" class="emergency-page page" style="padding-top:80px">
+  <div class="container" style="max-width:800px">
+    <div class="text-center mb-5">
+      <div class="emergency-pulsing mx-auto" onclick="triggerEmergency()">🆘</div>
+      <h2 style="font-family:'Syne',sans-serif; font-weight:800; font-size:2.5rem; margin-bottom:12px">Emergency Quick Help</h2>
+      <p style="color:var(--muted); max-width:480px; margin:0 auto 30px">Instantly connect with the nearest available trusted service provider for urgent situations.</p>
+      <button class="btn-submit" style="background:linear-gradient(135deg,var(--danger),#b91c1c); max-width:300px; margin:0 auto; animation:pulse-red 2s infinite" onclick="triggerEmergency()">
+        <i class="fas fa-exclamation-circle me-2"></i>Request Emergency Help NOW
+      </button>
+    </div>
+
+    <!-- Nearby providers list -->
+    <div id="emergencyResults" style="display:none; animation:fadeIn 0.5s ease">
+      <div style="text-align:center; margin-bottom:24px">
+        <div class="trust-badge" style="border-color:var(--danger); color:var(--danger); font-size:0.9rem"><span class="online-dot" style="background:var(--danger)"></span>3 Providers Found Nearby</div>
+      </div>
+      
+      <div class="map-container mb-4">
+        <div class="map-grid"></div>
+        <div class="map-dot" style="top:48%;left:48%;z-index:2"></div>
+        <div class="map-dot green" style="top:30%;left:58%;background:var(--accent3);z-index:2"></div>
+        <div class="map-dot green" style="top:62%;left:38%;background:var(--accent3);z-index:2"></div>
+        <div class="map-dot green" style="top:40%;left:28%;background:var(--accent3);z-index:2"></div>
+        <div style="position:relative;z-index:1; text-align:center; font-size:0.85rem; color:var(--text); font-weight:600">
+          <i class="fas fa-broadcast-tower me-2" style="color:var(--danger)"></i>Locating providers in your area...
+        </div>
+      </div>
+
+      <div id="emergencyProviderList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== REGISTER PAGE ====== -->
+<div id="page-register" class="page">
+  <div class="section-block" style="padding-top:40px">
+    <div class="form-page-inner">
+      <div class="text-center mb-4">
+        <div class="avatar-upload-circle" onclick="triggerUpload('regAvatar')" title="Upload photo">
+          <input type="file" id="regAvatar" style="display:none" accept="image/*" onchange="handleAvatarPreview(this,'regAvatarImg')">
+          <img id="regAvatarImg" style="display:none; width:100%; height:100%; object-fit:cover; border-radius:50%">
+          <span id="regAvatarIcon">📷</span>
+        </div>
+        <div style="color:var(--muted); font-size:0.8rem">Click to upload photo</div>
+      </div>
+      <div class="form-title text-center">Create Account</div>
+      <div class="form-subtitle text-center">Join TruVanta as a customer or service provider</div>
+
+      <div class="row g-3">
+        <div class="col-md-6 form-group">
+          <label class="custom-label">Full Name *</label>
+          <input type="text" id="reg-name" class="custom-input" placeholder="Your full name" autocomplete="off">
+        </div>
+        <div class="col-md-6 form-group">
+          <label class="custom-label">Email Address *</label>
+          <input type="email" id="reg-email" class="custom-input" placeholder="you@example.com" autocomplete="off">
+        </div>
+        <div class="col-md-6 form-group">
+          <label class="custom-label">Phone Number *</label>
+          <input type="tel" id="reg-phone" class="custom-input" placeholder="+880 1700 000000" autocomplete="off">
+        </div>
+        <div class="col-md-6 form-group">
+          <label class="custom-label">Role</label>
+          <select id="reg-role" class="custom-input">
+            <option>Customer</option>
+            <option>Service Provider</option>
+          </select>
+        </div>
+        <div class="col-12 form-group">
+          <label class="custom-label">Password *</label>
+          <div class="pass-toggle">
+            <input type="password" id="reg-pass" class="custom-input" placeholder="Min 8 characters" autocomplete="new-password">
+            <button class="pass-toggle-btn" onclick="togglePass('reg-pass',this)" type="button"><i class="fas fa-eye"></i></button>
+          </div>
+        </div>
+        <div class="col-12 form-group">
+          <label class="custom-label">Confirm Password *</label>
+          <div class="pass-toggle">
+            <input type="password" id="reg-pass2" class="custom-input" placeholder="Repeat password" autocomplete="new-password">
+            <button class="pass-toggle-btn" onclick="togglePass('reg-pass2',this)" type="button"><i class="fas fa-eye"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-submit mt-2" id="registerSubmitBtn" onclick="registerUser()"><i class="fas fa-user-plus me-2"></i>Create Account</button>
+      <div class="text-center mt-3" style="color:var(--muted); font-size:0.9rem">Already have an account? <button class="nav-btn p-0" style="color:var(--accent); display:inline" onclick="showPage('login')">Sign In</button></div>
+      <!-- Account created confirmation (no raw DB shown) -->
+      <div id="regSuccessMsg" style="display:none; margin-top:20px; animation:fadeIn 0.5s ease">
+        <div style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(0,212,255,0.05)); border:1px solid rgba(16,185,129,0.3); border-radius:14px; padding:20px; text-align:center">
+          <div style="font-size:2.5rem; margin-bottom:10px">✅</div>
+          <div style="font-family:'Syne',sans-serif; font-weight:700; margin-bottom:4px" id="regSuccessName">Account Created!</div>
+          <div style="color:var(--muted); font-size:0.88rem">Registration successful. Redirecting to your profile…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== LOGIN PAGE ====== -->
+<div id="page-login" class="page">
+  <div class="section-block" style="padding-top:40px">
+    <div class="form-page-inner" style="max-width:460px">
+      <div class="text-center mb-4">
+        <div style="font-size:3rem; margin-bottom:10px">🔐</div>
+        <div class="form-title">Welcome Back</div>
+        <div class="form-subtitle">Sign in to your TruVanta account</div>
+      </div>
+      <div class="form-group">
+        <label class="custom-label">Email Address</label>
+        <input type="email" id="login-email" class="custom-input" placeholder="you@example.com" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label class="custom-label">Password</label>
+        <div class="pass-toggle">
+          <input type="password" id="login-pass" class="custom-input" placeholder="Your password" autocomplete="new-password">
+          <button class="pass-toggle-btn" onclick="togglePass('login-pass',this)" type="button"><i class="fas fa-eye"></i></button>
+        </div>
+      </div>
+      <button class="btn-submit" id="loginSubmitBtn" onclick="loginUser()"><i class="fas fa-sign-in-alt me-2"></i>Sign In</button>
+      <div class="text-center mt-2">
+        <button class="nav-btn p-0" style="color:var(--muted); font-size:0.88rem" onclick="showForgotPassword()"><i class="fas fa-key me-1"></i>Forgot Password?</button>
+      </div>
+      <!-- Forgot Password Section -->
+      <div id="forgotPasswordSection" style="display:none; margin-top:20px; animation:fadeIn 0.4s ease">
+        <div style="background:linear-gradient(135deg,rgba(0,212,255,0.07),rgba(124,58,237,0.05)); border:1px solid rgba(0,212,255,0.2); border-radius:14px; padding:20px">
+          <div style="font-family:'Syne',sans-serif; font-weight:700; margin-bottom:6px; font-size:1rem">🔑 Reset Your Password</div>
+          <div style="color:var(--muted); font-size:0.85rem; margin-bottom:16px">Enter your registered email — we'll send an OTP to verify it's you.</div>
+          <div class="form-group">
+            <label class="custom-label">Registered Email</label>
+            <input type="email" id="forgot-email" class="custom-input" placeholder="you@example.com" autocomplete="off">
+          </div>
+          <button class="btn-submit" id="forgotSendOtpBtn" onclick="sendForgotOTP()" style="background:linear-gradient(135deg,var(--accent),#0090b8); color:#0a0f1e">
+            <i class="fas fa-paper-plane me-2"></i>Send OTP to Email
+          </button>
+          <!-- New password fields — shown after OTP verified -->
+          <div id="forgotNewPassSection" style="display:none; margin-top:16px; animation:fadeIn 0.4s ease">
+            <div class="form-group">
+              <label class="custom-label">New Password</label>
+              <div class="pass-toggle">
+                <input type="password" id="forgot-newpass" class="custom-input" placeholder="Min 8 characters" autocomplete="new-password">
+                <button class="pass-toggle-btn" onclick="togglePass('forgot-newpass',this)" type="button"><i class="fas fa-eye"></i></button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="custom-label">Confirm New Password</label>
+              <div class="pass-toggle">
+                <input type="password" id="forgot-newpass2" class="custom-input" placeholder="Repeat new password" autocomplete="new-password">
+                <button class="pass-toggle-btn" onclick="togglePass('forgot-newpass2',this)" type="button"><i class="fas fa-eye"></i></button>
+              </div>
+            </div>
+            <button class="btn-submit" onclick="resetPassword()" style="background:linear-gradient(135deg,var(--accent3),#059669)">
+              <i class="fas fa-lock me-2"></i>Save New Password
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-3" style="color:var(--muted); font-size:0.9rem">Don't have an account? <button class="nav-btn p-0" style="color:var(--accent); display:inline" onclick="showPage('register')">Sign Up</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== PROFILE PAGE ====== -->
+<div id="page-profile" class="page">
+  <div class="section-block" style="padding-top:40px; max-width:700px">
+    <div class="profile-card">
+      <div class="profile-header"></div>
+      <div class="profile-avatar" id="profileAvatar">👤</div>
+      <div class="profile-body">
+        <div class="profile-name" id="profileName">—</div>
+        <div style="color:var(--muted); margin-bottom:4px" id="profileEmail">—</div>
+        <div style="color:var(--muted); font-size:0.9rem" id="profilePhone">—</div>
+        <div class="mt-3 d-flex gap-2 flex-wrap" id="profileBadges">
+          <span class="trust-badge"><i class="fas fa-user-check"></i> Member</span>
+        </div>
+        <div class="row g-3 mt-4">
+          <div class="col-4"><div style="background:var(--surface2); border-radius:12px; padding:16px; text-align:center"><div style="font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:800; color:var(--accent)">0</div><div style="font-size:0.78rem; color:var(--muted)">Bookings</div></div></div>
+          <div class="col-4"><div style="background:var(--surface2); border-radius:12px; padding:16px; text-align:center"><div style="font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:800; color:var(--accent3)">New</div><div style="font-size:0.78rem; color:var(--muted)">Trust Score</div></div></div>
+          <div class="col-4"><div style="background:var(--surface2); border-radius:12px; padding:16px; text-align:center"><div style="font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:800; color:var(--gold)">0★</div><div style="font-size:0.78rem; color:var(--muted)">Reviews</div></div></div>
+        </div>
+        <button class="btn-submit mt-4" style="background:rgba(239,68,68,0.2); color:var(--danger); box-shadow:none" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== MODALS ====== -->
+<!-- Verify Modal -->
+<div class="modal-overlay" id="verifyModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('verifyModal')"><i class="fas fa-times"></i></button>
+    <h4 style="font-family:'Syne',sans-serif; font-weight:800; margin-bottom:6px">Start Skill Verification</h4>
+    <p style="color:var(--muted); font-size:0.9rem; margin-bottom:24px">Upload your documents and we'll verify your identity and skills.</p>
+    <div class="form-group">
+      <label class="custom-label">Government ID (NID/Passport)</label>
+      <div class="upload-area" onclick="triggerUpload('vId')"><input type="file" id="vId" style="display:none" onchange="labelFile('vId','vIdLabel')"><i class="fas fa-id-card fa-xl mb-2" style="color:var(--accent)"></i><div id="vIdLabel" style="color:var(--muted);font-size:0.9rem">Upload ID document</div></div>
+    </div>
+    <div class="form-group">
+      <label class="custom-label">Skill Certificate</label>
+      <div class="upload-area" onclick="triggerUpload('vCert')"><input type="file" id="vCert" style="display:none" onchange="labelFile('vCert','vCertLabel')"><i class="fas fa-certificate fa-xl mb-2" style="color:var(--accent2)"></i><div id="vCertLabel" style="color:var(--muted);font-size:0.9rem">Upload certificate</div></div>
+    </div>
+    <button class="btn-submit" onclick="submitVerification()"><i class="fas fa-upload me-2"></i>Submit for Verification</button>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+<!-- ====== OTP VERIFICATION MODAL ====== -->
+<div class="modal-overlay" id="otpModal">
+  <div class="modal-box" style="max-width:420px">
+    <button class="modal-close" onclick="closeModal('otpModal')"><i class="fas fa-times"></i></button>
+    <div class="text-center mb-4">
+      <div style="font-size:3rem; margin-bottom:10px">📧</div>
+      <h4 style="font-family:'Syne',sans-serif; font-weight:800; margin-bottom:6px">Verify Your Email</h4>
+      <p style="color:var(--muted); font-size:0.88rem" id="otpModalSubtitle">We sent a 6-digit OTP to your Gmail address. Check your inbox (and spam folder).</p>
+    </div>
+    <div class="form-group">
+      <label class="custom-label">Enter 6-Digit OTP</label>
+      <input type="text" id="otpInput" class="custom-input" placeholder="e.g. 482917" maxlength="6"
+        style="letter-spacing:6px; font-size:1.4rem; text-align:center; font-family:'Syne',sans-serif; font-weight:700"
+        oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+    </div>
+    <div id="otpTimer" style="text-align:center; color:var(--muted); font-size:0.85rem; margin-bottom:16px">
+      OTP expires in <span id="otpCountdown" style="color:var(--accent); font-weight:700">05:00</span>
+    </div>
+    <button class="btn-submit" id="otpVerifyBtn" onclick="verifyOTP()">
+      <i class="fas fa-check-shield me-2"></i>Verify & Continue
+    </button>
+    <div class="text-center mt-3">
+      <button class="nav-btn p-0" style="color:var(--accent); font-size:0.85rem" onclick="resendOTP()">
+        <i class="fas fa-redo me-1"></i>Resend OTP
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ====== PROVIDER DETAIL MODAL ====== -->
+<div class="modal-overlay" id="providerModal">
+  <div class="modal-box" style="max-width:500px">
+    <button class="modal-close" onclick="closeModal('providerModal')"><i class="fas fa-times"></i></button>
+    <div id="providerModalContent"></div>
+  </div>
+</div>
+<script src="frontend/js/data.js"></script>
+<script src="frontend/js/app.js"></script>
+</body>
+</html>

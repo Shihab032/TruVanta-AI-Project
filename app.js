@@ -254,6 +254,7 @@ function clearLoginForm() {
   document.querySelectorAll('#page-login .pass-toggle-btn').forEach(btn => {
     btn.innerHTML = '<i class="fas fa-eye"></i>';
   });
+  
   // Reset forgot password section
   const forgotSec = document.getElementById('forgotPasswordSection');
   if (forgotSec) forgotSec.style.display = 'none';
